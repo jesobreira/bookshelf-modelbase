@@ -1,6 +1,8 @@
 # bookshelf-modelbase
 [![Build Status](https://travis-ci.org/bsiddiqui/bookshelf-modelbase.svg?branch=master)](https://travis-ci.org/bsiddiqui/bookshelf-modelbase) [![Code Climate](https://codeclimate.com/github/bsiddiqui/bookshelf-modelbase/badges/gpa.svg)](https://codeclimate.com/github/bsiddiqui/bookshelf-modelbase) [![Test Coverage](https://codeclimate.com/github/bsiddiqui/bookshelf-modelbase/badges/coverage.svg)](https://codeclimate.com/github/bsiddiqui/bookshelf-modelbase) [![Version](https://badge.fury.io/js/bookshelf-modelbase.svg)](http://badge.fury.io/js/bookshelf-modelbase) [![Downloads](http://img.shields.io/npm/dm/bookshelf-modelbase.svg)](https://www.npmjs.com/package/bookshelf-modelbase)
 
+This patch does not use `.bind(this)`, useful if you are having errors like "model.create is not a function" or "this.bind is not a function".
+
 ## Why
 [Bookshelf.js](https://github.com/tgriesser/bookshelf) is awesome. However,
 we found ourselves extending `bookshelf.Model` for the same reasons over and
@@ -153,11 +155,11 @@ findOne: function (query, options) {
   * @return {Promise(bookshelf.Model)} single Model
   */
 findOrCreate: function (data, options) {
-  return this.findOne(data, extend(options, { require: false }))
-    .bind(this)
+  var Model = this
+  return Model.findOne(data, extend(options, { require: false }))
     .then(function (model) {
       var defaults = options && options.defaults;
-      return model || this.create(extend(defaults, data), options);
+      return model || Model.create(extend(defaults, data), options);
     });
 }
 ```
@@ -192,15 +194,15 @@ update: function (data, options) {
  * @param {Object} [options] Options for model.save
  */
 upsert: function (selectData, updateData, options) {
-  return this.findOne(selectData, extend(options, { require: false }))
-    .bind(this)
+  var Model = this
+  return Model.findOne(selectData, extend(options, { require: false }))
     .then(function (model) {
       return model
         ? model.save(
           updateData,
           extend({ patch: true, method: 'update' }, options)
         )
-        : this.create(
+        : Model.create(
           extend(selectData, updateData),
           extend(options, { method: 'insert' })
         )

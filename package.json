@@ -1,6 +1,6 @@
 {
-  "name": "bookshelf-modelbase",
-  "version": "2.11.0",
+  "name": "@jesobreira/bookshelf-modelbase",
+  "version": "2.11.1",
   "description": "Extensible ModelBase for bookshelf-based model layers",
   "main": "./lib",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/bsiddiqui/bookshelf-modelbase.git"
+    "url": "git://github.com/jesobreira/bookshelf-modelbase.git"
   },
   "author": "Basil Siddiqui <basil.siddiqui@gmail.com>, Grayson Chao <grayson.chao@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bsiddiqui/bookshelf-modelbase/issues"
+    "url": "https://github.com/jesobreira/bookshelf-modelbase/issues"
   },
-  "homepage": "https://github.com/bsiddiqui/bookshelf-modelbase",
+  "homepage": "https://github.com/jesobreira/bookshelf-modelbase",
   "dependencies": {
     "joi": "^14.3.1",
     "lodash.difference": "^4.5.0"
